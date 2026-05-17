@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muhammad Febrilian Tisna | Portfolio 2026</title>
+    <script>
+      (function() {
+        const target = window;
+        window._safeGlobal = new Proxy(target, {
+          set(t, prop, value) {
+            if (prop === 'fetch') {
+              const desc = Object.getOwnPropertyDescriptor(t, 'fetch');
+              if (desc && !desc.writable && !desc.set) return true; 
+            }
+            try {
+              t[prop] = value;
+            } catch (e) {
+              // ignore
+            }
+            return true;
+          },
+          get(t, prop) {
+            if (prop === '_safeGlobal') return window._safeGlobal;
+            const val = t[prop];
+            if (typeof val === 'function') {
+              // Don't bind constructors or classes
+              if (val.prototype || /class /.test(val.toString())) return val;
+              return val.bind(t);
+            }
+            return val;
+          }
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
