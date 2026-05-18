@@ -283,8 +283,13 @@ export default function App() {
           <div className="mb-20 flex flex-col items-end gap-4 text-right">
             <h2 className="font-serif text-5xl font-light tracking-tight sm:text-7xl">SELECTED WORKS</h2>
             <p className="max-w-md text-brand-muted">
-              A curated collection of projects that define digital boundaries and explore the synergy of form and function.
+              A curated collection of projects spanning AI, security, analytics, and e-commerce. Tier-ranked by complexity and impact.
             </p>
+            <div className="flex gap-2 mt-2">
+              <span className="rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-white">S-TIER</span>
+              <span className="rounded-full bg-indigo-500/80 px-3 py-1 text-xs font-bold text-white">A-TIER</span>
+              <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white">B-TIER</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -465,6 +470,12 @@ function SocialLink({ children, href }: { children: React.ReactNode, href: strin
 function ProjectCard({ project, index, ...props }: { project: Project, index: number, key?: string }) {
   const cardRef = useRef(null);
   
+  const tierColors = {
+    S: 'bg-brand-accent text-white',
+    A: 'bg-indigo-500/80 text-white',
+    B: 'bg-white/20 text-white',
+  };
+  
   return (
     <motion.div
       ref={cardRef}
@@ -483,21 +494,47 @@ function ProjectCard({ project, index, ...props }: { project: Project, index: nu
         />
         <div className="absolute inset-0 bg-brand-bg/20 transition-opacity group-hover:opacity-0" />
         
+        {/* Tier Badge */}
+        <div className="absolute top-4 right-4">
+          <span className={cn('rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider', tierColors[project.tier])}>
+            {project.tier}-Tier
+          </span>
+        </div>
+        
         {/* Hover Overlay */}
         <div className="absolute inset-x-0 bottom-0 translate-y-full glass p-8 transition-transform duration-500 group-hover:translate-y-0">
-          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-accent">{project.category}</p>
+          <div className="flex items-center gap-2 mb-2">
+            <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider', tierColors[project.tier])}>{project.tier}-Tier</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">{project.category}</span>
+          </div>
           <h3 className="font-serif text-3xl font-medium">{project.title}</h3>
           <p className="mt-4 text-sm text-brand-muted">{project.description}</p>
-          <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-white">
-            <span>View Project</span>
-            <ArrowUpRight size={16} />
+          <div className="mt-4 flex flex-wrap gap-1">
+            {project.tech.slice(0, 4).map((t, i) => (
+              <span key={i} className="rounded-full bg-white/10 px-2 py-0.5 text-[10px]">{t}</span>
+            ))}
+          </div>
+          <div className="mt-6 flex items-center gap-3">
+            {project.live && (
+              <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors">
+                <span>Live Demo</span><ArrowUpRight size={14} />
+              </a>
+            )}
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-brand-muted hover:text-white transition-colors">
+                <span>Source</span><ArrowUpRight size={14} />
+              </a>
+            )}
           </div>
         </div>
       </div>
       
       <div className="mt-6 flex items-center justify-between">
         <div>
-          <p className="text-xs text-brand-muted">{project.year}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xs text-brand-muted">{project.year}</p>
+            <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', tierColors[project.tier])}>{project.tier}</span>
+          </div>
           <h3 className="mt-1 font-serif text-xl">{project.title}</h3>
         </div>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition-colors group-hover:bg-brand-accent group-hover:border-brand-accent">
