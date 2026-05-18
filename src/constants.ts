@@ -80,7 +80,74 @@ export const PROJECTS: Project[] = [
     tier: 'B',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
     github: 'https://github.com/febrits/habitgrid',
-    live: 'https://habitgrid-bangpeb.vercel.app',
+    live: 'https://habitgrid-eight.vercel.app',
+    status: 'completed'
+  },
+
+  // ===== B-TIER: SOLID PROJECTS (Batch 2) =====
+  {
+    id: '6',
+    title: 'ChatVault',
+    category: 'Real-time Chat',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?auto=format&fit=crop&q=80&w=1200',
+    description: 'Real-time chat application with multiple rooms, message history, and clean responsive interface. Supports instant messaging with room-based organization.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/chatvault',
+    live: 'https://chatvault-nine.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '7',
+    title: 'NotePad',
+    category: 'Note Taking',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&q=80&w=1200',
+    description: 'Note taking app with folders, tags, and full-text search. Organize notes in nested folders, filter by tags, and find anything instantly.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/notepad',
+    live: 'https://notepad-bangpeb.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '8',
+    title: 'CalendarHub',
+    category: 'Event Scheduler',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=1200',
+    description: 'Event scheduler with monthly calendar view, event creation, and date navigation. Add, view, and manage events with an intuitive calendar interface.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/calendarhub',
+    live: 'https://calendarhub-indol.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '9',
+    title: 'ProductCatalog',
+    category: 'E-Commerce',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1200',
+    description: 'E-commerce product catalog with shopping cart, product grid, and checkout flow. Browse products, add to cart, and complete purchases.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/productcatalog',
+    live: 'https://productcatalog-phi.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '10',
+    title: 'GameSnake',
+    category: 'Browser Game',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=1200',
+    description: 'Classic Snake browser game with smooth controls, score tracking, and retro aesthetics. Eat, grow, and avoid hitting the walls!',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Canvas API', 'Vite'],
+    github: 'https://github.com/febrits/gamesnake',
+    live: 'https://gamesnake-two.vercel.app',
     status: 'completed'
   }
 ];
