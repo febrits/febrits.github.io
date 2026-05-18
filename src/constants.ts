@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     tier: 'S',
     tech: ['Next.js 15', 'Supabase', 'Recharts', 'TypeScript', 'PapaParse'],
     github: 'https://github.com/febrits/neural-analytics',
-    live: 'https://neural-analytics.vercel.app',
+    live: 'https://project-2-analytics.vercel.app',
     status: 'completed'
   },
 
