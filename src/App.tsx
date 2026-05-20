@@ -481,24 +481,22 @@ function SocialLink({ children, href }: { children: React.ReactNode, href: strin
   );
 }
 
-function ProjectCard({ project, index, ...props }: { project: Project, index: number, key?: string }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
   const tierColors = {
     S: 'bg-brand-accent text-white',
     A: 'bg-indigo-500/80 text-white',
     B: 'bg-white/20 text-white',
   };
 
-  const handleCardClick = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!isTouch) return;
-    const target = e.target as HTMLElement;
-    if (target.closest('a')) return;
-    setIsExpanded(prev => !prev);
-  }, [isTouch]);
-  
+  // Determine if overlay should be visible:
+  // - Desktop: show on hover (CSS group-hover)
+  // - Mobile: show on tap (React state)
+  const showOverlay = isOpen || isHovering;
+
   return (
     <motion.div
       ref={cardRef}
@@ -507,71 +505,144 @@ function ProjectCard({ project, index, ...props }: { project: Project, index: nu
       transition={{ delay: index % 2 * 0.2, duration: 0.8 }}
       viewport={{ once: true }}
       className="group cursor-pointer"
-      onClick={handleCardClick}
+      // Desktop hover
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      // Mobile tap — only toggle if not clicking a link
+      onClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('a[href]')) return;
+        setIsOpen((prev) => !prev);
+      }}
     >
+      {/*
+        Image container — overflow-hidden is fine here because the overlay
+        is absolutely positioned INSIDE this container and will slide up
+        within its bounds.
+      */}
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5">
-        <img 
-          src={project.image} 
+        <img
+          src={project.image}
           alt={project.title}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           referrerPolicy="no-referrer"
         />
-        <div className={`absolute inset-0 bg-brand-bg/20 transition-opacity duration-500 ${!isTouch ? 'group-hover:opacity-0' : isExpanded ? 'opacity-0' : ''}`} />
-        
-        {/* Tier Badge */}
-        <div className="absolute top-4 right-4 z-10">
-          <span className={cn('rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider', tierColors[project.tier])}>
+
+        {/* Dark tint over image — fades out when overlay shows */}
+        <div
+          className={cn(
+            'absolute inset-0 bg-brand-bg/20 transition-opacity duration-500',
+            showOverlay ? 'opacity-0' : 'opacity-100'
+          )}
+        />
+
+        {/* Tier Badge — always on top */}
+        <div className="absolute top-4 right-4 z-20">
+          <span
+            className={cn(
+              'rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider',
+              tierColors[project.tier]
+            )}
+          >
             {project.tier}-Tier
           </span>
         </div>
-        
-        {/* Info Overlay — hover on desktop, tap on mobile */}
-        <div className={`absolute inset-x-0 bottom-0 glass p-4 sm:p-8 transition-transform duration-500 ${
-          isTouch 
-            ? (isExpanded ? 'translate-y-0' : 'translate-y-full')
-            : 'translate-y-full group-hover:translate-y-0'
-        }`}>
+
+        {/*
+          Info Overlay — uses Framer Motion animate for smooth
+          state-based animation that works identically on mobile & desktop.
+        */}
+        <motion.div
+          className="absolute inset-x-0 bottom-0 z-10 glass p-4 sm:p-8"
+          initial={false}
+          animate={{ y: showOverlay ? 0 : '100%' }}
+          transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+        >
           <div className="flex items-center gap-2 mb-2">
-            <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider', tierColors[project.tier])}>{project.tier}-Tier</span>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">{project.category}</span>
+            <span
+              className={cn(
+                'rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider',
+                tierColors[project.tier]
+              )}
+            >
+              {project.tier}-Tier
+            </span>
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">
+              {project.category}
+            </span>
           </div>
-          <h3 className="font-serif text-xl sm:text-3xl font-medium">{project.title}</h3>
-          <p className="mt-2 sm:mt-4 text-xs sm:text-sm text-brand-muted line-clamp-2 sm:line-clamp-none">{project.description}</p>
+          <h3 className="font-serif text-xl sm:text-3xl font-medium">
+            {project.title}
+          </h3>
+          <p className="mt-2 sm:mt-4 text-xs sm:text-sm text-brand-muted line-clamp-2 sm:line-clamp-none">
+            {project.description}
+          </p>
           <div className="mt-2 sm:mt-4 flex flex-wrap gap-1">
             {project.tech.slice(0, 4).map((t, i) => (
-              <span key={i} className="rounded-full bg-white/10 px-2 py-0.5 text-[10px]">{t}</span>
+              <span
+                key={i}
+                className="rounded-full bg-white/10 px-2 py-0.5 text-[10px]"
+              >
+                {t}
+              </span>
             ))}
           </div>
           <div className="mt-3 sm:mt-6 flex items-center gap-3">
             {project.live && (
-              <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors">
-                <span>Live Demo</span><ArrowUpRight size={14} />
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span>Live Demo</span>
+                <ArrowUpRight size={14} />
               </a>
             )}
             {project.github && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-brand-muted hover:text-white transition-colors">
-                <span>Source</span><ArrowUpRight size={14} />
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm text-brand-muted hover:text-white transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span>Source</span>
+                <ArrowUpRight size={14} />
               </a>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
-      
+
+      {/* Card footer */}
       <div className="mt-6 flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
             <p className="text-xs text-brand-muted">{project.year}</p>
-            <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', tierColors[project.tier])}>{project.tier}</span>
+            <span
+              className={cn(
+                'rounded-full px-2 py-0.5 text-[10px] font-bold',
+                tierColors[project.tier]
+              )}
+            >
+              {project.tier}
+            </span>
           </div>
           <h3 className="mt-1 font-serif text-xl">{project.title}</h3>
         </div>
-        <div className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition-all ${
-          isTouch 
-            ? (isExpanded ? 'bg-brand-accent border-brand-accent rotate-90' : '')
-            : 'group-hover:bg-brand-accent group-hover:border-brand-accent'
-        }`}>
+        <motion.div
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
+          animate={{
+            backgroundColor: showOverlay ? 'var(--color-brand-accent)' : 'transparent',
+            borderColor: showOverlay ? 'var(--color-brand-accent)' : 'rgba(255,255,255,0.1)',
+            rotate: showOverlay ? 90 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        >
           <ChevronRight size={20} />
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
