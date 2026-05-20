@@ -515,29 +515,28 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         setIsOpen((prev) => !prev);
       }}
     >
-      {/*
-        Image container — overflow-hidden is fine here because the overlay
-        is absolutely positioned INSIDE this container and will slide up
-        within its bounds.
-      */}
-      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          referrerPolicy="no-referrer"
-        />
+      {/* Image container — no overflow-hidden so overlay can slide up */}
+      <div className="relative aspect-[16/10] rounded-2xl bg-white/5">
+        {/* Image wrapper with overflow-hidden for the image itself */}
+        <div className="absolute inset-0 overflow-hidden rounded-2xl">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            referrerPolicy="no-referrer"
+          />
+        </div>
 
         {/* Dark tint over image — fades out when overlay shows */}
         <div
           className={cn(
-            'absolute inset-0 bg-brand-bg/20 transition-opacity duration-500',
+            'absolute inset-0 rounded-2xl bg-brand-bg/20 transition-opacity duration-500 pointer-events-none',
             showOverlay ? 'opacity-0' : 'opacity-100'
           )}
         />
 
         {/* Tier Badge — always on top */}
-        <div className="absolute top-4 right-4 z-20">
+        <div className="absolute top-4 right-4 z-20 pointer-events-none">
           <span
             className={cn(
               'rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider',
@@ -549,11 +548,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
 
         {/*
-          Info Overlay — uses Framer Motion animate for smooth
-          state-based animation that works identically on mobile & desktop.
+          Info Overlay — OUTSIDE the overflow-hidden wrapper.
+          Uses Framer Motion state-based animation.
+          Desktop: hover via onMouseEnter/Leave
+          Mobile: tap via onClick toggle
         */}
         <motion.div
-          className="absolute inset-x-0 bottom-0 z-10 glass p-4 sm:p-8"
+          className="absolute inset-x-0 bottom-0 z-10 glass rounded-b-2xl p-4 sm:p-8"
           initial={false}
           animate={{ y: showOverlay ? 0 : '100%' }}
           transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
