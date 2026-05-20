@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { 
   ArrowRight, 
@@ -73,43 +73,53 @@ export default function App() {
   }, []);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    const touchDetected = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(touchDetected);
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isTouchDevice]);
 
   return (
     <div ref={containerRef} className="relative min-h-screen">
       {/* System Status Bar */}
-      <div className="fixed top-0 left-0 right-0 z-[60] flex h-8 items-center justify-between border-b border-white/5 bg-black/60 px-4 font-mono text-[10px] tracking-widest text-brand-accent/60 backdrop-blur-md">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
+      <div className="fixed top-0 left-0 right-0 z-[60] flex h-8 items-center justify-between border-b border-white/5 bg-black/60 px-2 sm:px-4 font-mono text-[9px] sm:text-[10px] tracking-widest text-brand-accent/60 backdrop-blur-md overflow-hidden">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span>ENCRYPTED_LINK: ACTIVE</span>
+            <span className="hidden xs:inline">ENCRYPTED_LINK: ACTIVE</span>
+            <span className="xs:hidden">SECURE</span>
           </div>
-          <span className="hidden sm:block">SYSTEM: MUHAMMAD_FEBRILIAN_TISNA_OS_v2.6</span>
+          <span className="hidden sm:block truncate">SYSTEM: MUHAMMAD_FEBRILIAN_TISNA_OS_v2.6</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span>LATENCY: 12ms</span>
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <span className="hidden sm:inline">LATENCY: 12ms</span>
           <span className="hidden sm:block">UPTIME: 14:02:33:01</span>
           <div className="flex items-center gap-1">
             <Lock size={10} />
-            <span>SECURE</span>
+            <span className="hidden sm:inline">SECURE</span>
           </div>
         </div>
       </div>
 
-      {/* Mouse Glow Follower */}
-      <motion.div 
-        className="pointer-events-none fixed inset-0 z-30"
-        animate={{
-          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.05), transparent 80%)`,
-        }}
-      />
+      {/* Mouse Glow Follower — desktop only */}
+      {!isTouchDevice && (
+        <motion.div 
+          className="pointer-events-none fixed inset-0 z-30"
+          animate={{
+            background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.05), transparent 80%)`,
+          }}
+        />
+      )}
       {/* Cinematic Background */}
       <div className="fixed inset-0 z-[-1] overflow-hidden bg-brand-bg">
         <div className="scanline" />
@@ -148,7 +158,7 @@ export default function App() {
       </div>
 
       {/* Navigation Dock */}
-      <nav className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2">
+      <nav className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2" style={{ bottom: 'max(2rem, env(safe-area-inset-bottom, 0px) + 0.5rem)' }}>
         <motion.div 
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -192,7 +202,7 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
                   alt="Profile"
-                  className="h-full w-full object-cover grayscale transition-all hover:grayscale-0"
+                  className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0 sm:hover:grayscale-0"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -213,20 +223,24 @@ export default function App() {
             whileInView={{ opacity: 1 }}
             className="group relative"
           >
-            <span className="text-glow animate-text-gradient bg-gradient-to-r from-white via-indigo-200 to-white bg-clip-text font-serif text-6xl font-black leading-[1.1] tracking-tight text-transparent sm:text-8xl md:text-9xl block">
+            <span className="text-glow animate-text-gradient bg-gradient-to-r from-white via-indigo-200 to-white bg-clip-text font-serif text-[3rem] font-black leading-[1.1] tracking-tight text-transparent sm:text-8xl md:text-9xl block">
               MUHAMMAD <br /> FEBRILIAN
             </span>
-            <span className="text-glow animate-text-gradient bg-gradient-to-r from-white via-indigo-200 to-white bg-clip-text font-serif text-6xl font-black leading-[1.1] tracking-tight text-transparent sm:text-8xl md:text-9xl block">
+            <span className="text-glow animate-text-gradient bg-gradient-to-r from-white via-indigo-200 to-white bg-clip-text font-serif text-[3rem] font-black leading-[1.1] tracking-tight text-transparent sm:text-8xl md:text-9xl block">
               TISNA.
             </span>
             
-            {/* Glitch Overlay */}
-            <span className="absolute inset-0 block select-none pointer-events-none opacity-0 group-hover:opacity-100 group-hover:animate-glitch text-red-500/50 mix-blend-screen transition-opacity font-serif text-6xl font-black leading-[1.1] tracking-tight sm:text-8xl md:text-9xl">
-              MUHAMMAD <br /> FEBRILIAN TISNA.
-            </span>
-            <span className="absolute inset-0 block select-none pointer-events-none opacity-0 group-hover:opacity-100 group-hover:animate-glitch text-blue-500/50 mix-blend-screen transition-opacity font-serif text-6xl font-black leading-[1.1] tracking-tight sm:text-8xl md:text-9xl translate-x-1">
-              MUHAMMAD <br /> FEBRILIAN TISNA.
-            </span>
+            {/* Glitch Overlay — desktop hover only */}
+            {!isTouchDevice && (
+              <>
+                <span className="absolute inset-0 block select-none pointer-events-none opacity-0 group-hover:opacity-100 group-hover:animate-glitch text-red-500/50 mix-blend-screen transition-opacity font-serif text-[3rem] font-black leading-[1.1] tracking-tight sm:text-8xl md:text-9xl">
+                  MUHAMMAD <br /> FEBRILIAN TISNA.
+                </span>
+                <span className="absolute inset-0 block select-none pointer-events-none opacity-0 group-hover:opacity-100 group-hover:animate-glitch text-blue-500/50 mix-blend-screen transition-opacity font-serif text-[3rem] font-black leading-[1.1] tracking-tight sm:text-8xl md:text-9xl translate-x-1">
+                  MUHAMMAD <br /> FEBRILIAN TISNA.
+                </span>
+              </>
+            )}
           </motion.h1>
 
           <motion.div 
@@ -469,12 +483,21 @@ function SocialLink({ children, href }: { children: React.ReactNode, href: strin
 
 function ProjectCard({ project, index, ...props }: { project: Project, index: number, key?: string }) {
   const cardRef = useRef(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
   
   const tierColors = {
     S: 'bg-brand-accent text-white',
     A: 'bg-indigo-500/80 text-white',
     B: 'bg-white/20 text-white',
   };
+
+  const handleCardClick = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!isTouch) return;
+    const target = e.target as HTMLElement;
+    if (target.closest('a')) return;
+    setIsExpanded(prev => !prev);
+  }, [isTouch]);
   
   return (
     <motion.div
@@ -484,6 +507,7 @@ function ProjectCard({ project, index, ...props }: { project: Project, index: nu
       transition={{ delay: index % 2 * 0.2, duration: 0.8 }}
       viewport={{ once: true }}
       className="group cursor-pointer"
+      onClick={handleCardClick}
     >
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5">
         <img 
@@ -492,29 +516,33 @@ function ProjectCard({ project, index, ...props }: { project: Project, index: nu
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-brand-bg/20 transition-opacity group-hover:opacity-0" />
+        <div className={`absolute inset-0 bg-brand-bg/20 transition-opacity duration-500 ${!isTouch ? 'group-hover:opacity-0' : isExpanded ? 'opacity-0' : ''}`} />
         
         {/* Tier Badge */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-10">
           <span className={cn('rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider', tierColors[project.tier])}>
             {project.tier}-Tier
           </span>
         </div>
         
-        {/* Hover Overlay */}
-        <div className="absolute inset-x-0 bottom-0 translate-y-full glass p-8 transition-transform duration-500 group-hover:translate-y-0">
+        {/* Info Overlay — hover on desktop, tap on mobile */}
+        <div className={`absolute inset-x-0 bottom-0 glass p-4 sm:p-8 transition-transform duration-500 ${
+          isTouch 
+            ? (isExpanded ? 'translate-y-0' : 'translate-y-full')
+            : 'translate-y-full group-hover:translate-y-0'
+        }`}>
           <div className="flex items-center gap-2 mb-2">
             <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider', tierColors[project.tier])}>{project.tier}-Tier</span>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">{project.category}</span>
           </div>
-          <h3 className="font-serif text-3xl font-medium">{project.title}</h3>
-          <p className="mt-4 text-sm text-brand-muted">{project.description}</p>
-          <div className="mt-4 flex flex-wrap gap-1">
+          <h3 className="font-serif text-xl sm:text-3xl font-medium">{project.title}</h3>
+          <p className="mt-2 sm:mt-4 text-xs sm:text-sm text-brand-muted line-clamp-2 sm:line-clamp-none">{project.description}</p>
+          <div className="mt-2 sm:mt-4 flex flex-wrap gap-1">
             {project.tech.slice(0, 4).map((t, i) => (
               <span key={i} className="rounded-full bg-white/10 px-2 py-0.5 text-[10px]">{t}</span>
             ))}
           </div>
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-3 sm:mt-6 flex items-center gap-3">
             {project.live && (
               <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors">
                 <span>Live Demo</span><ArrowUpRight size={14} />
@@ -537,7 +565,11 @@ function ProjectCard({ project, index, ...props }: { project: Project, index: nu
           </div>
           <h3 className="mt-1 font-serif text-xl">{project.title}</h3>
         </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition-colors group-hover:bg-brand-accent group-hover:border-brand-accent">
+        <div className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition-all ${
+          isTouch 
+            ? (isExpanded ? 'bg-brand-accent border-brand-accent rotate-90' : '')
+            : 'group-hover:bg-brand-accent group-hover:border-brand-accent'
+        }`}>
           <ChevronRight size={20} />
         </div>
       </div>

@@ -9,6 +9,7 @@
   --color-brand-ink: #ffffff;
   --color-brand-muted: rgba(255, 255, 255, 0.4);
   --color-brand-accent: #6366f1;
+  --breakpoint-xs: 475px;
 
   --animate-text-gradient: text-gradient 5s ease infinite;
   --animate-glitch: glitch 1s linear infinite;
@@ -32,6 +33,21 @@
   body {
     @apply bg-brand-bg text-brand-ink font-sans antialiased selection:bg-brand-accent selection:text-white;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Safe area support for iOS */
+  html {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
