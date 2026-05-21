@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
     tier: 'S',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', '@dnd-kit', 'Vite'],
     github: 'https://github.com/febrits/taskflow',
-    live: 'https://taskflow-bangpeb.vercel.app',
+    live: 'https://taskflow-livid-mu.vercel.app',
     status: 'completed'
   },
   {
@@ -37,13 +37,52 @@ export const PROJECTS: Project[] = [
     tier: 'S',
     tech: ['React 19', 'TypeScript', 'React Router', 'Tailwind CSS v4', 'Vite'],
     github: 'https://github.com/febrits/devblog',
-    live: 'https://devblog-bangpeb.vercel.app',
+    live: 'https://devblog-three-ochre.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '3',
+    title: 'Portfolio Febri',
+    category: 'Portfolio',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&q=80&w=1200',
+    description: 'Personal portfolio website showcasing projects, skills, and experience. Built with React, TypeScript, and Tailwind CSS with smooth animations and responsive design.',
+    tier: 'S',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'Vite'],
+    github: 'https://github.com/febrits/febrits.github.io',
+    live: 'https://portfolio-febri.vercel.app',
     status: 'completed'
   },
 
   // ===== A-TIER: ADVANCED PROJECTS =====
   {
-    id: '3',
+    id: '4',
+    title: 'AuthKit',
+    category: 'Authentication',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1200',
+    description: 'Authentication toolkit with OAuth, JWT, session management, and role-based access control. Secure and scalable auth solution for modern web apps.',
+    tier: 'A',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'JWT', 'Vite'],
+    github: 'https://github.com/febrits/authkit',
+    live: 'https://authkit-sepia.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '5',
+    title: 'DataLens',
+    category: 'Data Analytics',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
+    description: 'Data analytics dashboard with interactive charts, real-time metrics, and customizable widgets. Visualize and analyze data with a clean, intuitive interface.',
+    tier: 'A',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Chart.js', 'Vite'],
+    github: 'https://github.com/febrits/datalens',
+    live: 'https://datalens-one.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '6',
     title: 'SnapURL',
     category: 'URL Shortener',
     year: '2026',
@@ -52,11 +91,11 @@ export const PROJECTS: Project[] = [
     tier: 'A',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
     github: 'https://github.com/febrits/snapurl',
-    live: 'https://snapurl-bangpeb.vercel.app',
+    live: 'https://snapurl-five.vercel.app',
     status: 'completed'
   },
   {
-    id: '4',
+    id: '7',
     title: 'InvoiceKit',
     category: 'Invoice Generator',
     year: '2026',
@@ -65,13 +104,39 @@ export const PROJECTS: Project[] = [
     tier: 'A',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
     github: 'https://github.com/febrits/invoicekit',
-    live: 'https://invoicekit-bangpeb.vercel.app',
+    live: 'https://invoicekit-olive.vercel.app',
     status: 'completed'
   },
 
   // ===== B-TIER: SOLID PROJECTS =====
   {
-    id: '5',
+    id: '8',
+    title: 'FileVault',
+    category: 'File Storage',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=1200',
+    description: 'Secure file storage and management system with upload, preview, and sharing capabilities. Organize files with folders and tags.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/filevault',
+    live: 'https://filevault-amber.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '9',
+    title: 'DeployBot',
+    category: 'DevOps',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1200',
+    description: 'Automated deployment bot with CI/CD pipeline integration, build monitoring, and rollback support. Streamline your deployment workflow.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/deploybot',
+    live: 'https://deploybot.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '10',
     title: 'HabitGrid',
     category: 'Habit Tracker',
     year: '2026',
@@ -83,10 +148,8 @@ export const PROJECTS: Project[] = [
     live: 'https://habitgrid-eight.vercel.app',
     status: 'completed'
   },
-
-  // ===== B-TIER: SOLID PROJECTS (Batch 2) =====
   {
-    id: '6',
+    id: '11',
     title: 'ChatVault',
     category: 'Real-time Chat',
     year: '2026',
@@ -99,7 +162,7 @@ export const PROJECTS: Project[] = [
     status: 'completed'
   },
   {
-    id: '7',
+    id: '12',
     title: 'NotePad',
     category: 'Note Taking',
     year: '2026',
@@ -108,11 +171,11 @@ export const PROJECTS: Project[] = [
     tier: 'B',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
     github: 'https://github.com/febrits/notepad',
-    live: 'https://notepad-bangpeb.vercel.app',
+    live: 'https://notepad-one-beta.vercel.app',
     status: 'completed'
   },
   {
-    id: '8',
+    id: '13',
     title: 'CalendarHub',
     category: 'Event Scheduler',
     year: '2026',
@@ -125,7 +188,7 @@ export const PROJECTS: Project[] = [
     status: 'completed'
   },
   {
-    id: '9',
+    id: '14',
     title: 'ProductCatalog',
     category: 'E-Commerce',
     year: '2026',
@@ -138,7 +201,7 @@ export const PROJECTS: Project[] = [
     status: 'completed'
   },
   {
-    id: '10',
+    id: '15',
     title: 'GameSnake',
     category: 'Browser Game',
     year: '2026',
@@ -148,6 +211,19 @@ export const PROJECTS: Project[] = [
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Canvas API', 'Vite'],
     github: 'https://github.com/febrits/gamesnake',
     live: 'https://gamesnake-two.vercel.app',
+    status: 'completed'
+  },
+  {
+    id: '16',
+    title: 'APIForge',
+    category: 'API Builder',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200',
+    description: 'API builder and testing tool with request builder, response viewer, and collection management. Design, test, and document APIs effortlessly.',
+    tier: 'B',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Vite'],
+    github: 'https://github.com/febrits/apiforge',
+    live: 'https://apiforge-nu.vercel.app',
     status: 'completed'
   }
 ];
