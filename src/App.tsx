@@ -555,6 +555,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         */}
         <motion.div
           className="absolute inset-x-0 bottom-0 z-10 glass rounded-b-2xl p-4 sm:p-8"
+          style={{ backgroundColor: 'rgba(10, 10, 14, 0.85)' }}
           initial={false}
           animate={{ y: showOverlay ? 0 : '100%' }}
           transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
