@@ -387,7 +387,7 @@ export default function App() {
                 initial={{ scale: 1.2 }}
                 whileInView={{ scale: 1 }}
                 transition={{ duration: 1.5 }}
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1200" 
+                src="/profile-portrait.jpg"
                 alt="Muhammad Febrilian Tisna Portrait"
                 className="h-full w-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-700"
                 referrerPolicy="no-referrer"
