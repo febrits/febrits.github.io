@@ -276,6 +276,7 @@ export default function App() {
             </button>
             <div className="flex gap-4">
               <SocialLink href="https://github.com/febrits" target="_blank" rel="noopener noreferrer"><Github size={20} /></SocialLink>
+              <SocialLink href="https://www.linkedin.com/in/muhammadfebriliantisna" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></SocialLink>
               <SocialLink href="https://instagram.com/fbrilnnt" target="_blank" rel="noopener noreferrer"><Instagram size={20} /></SocialLink>
               <SocialLink href="https://youtube.com/@febnas" target="_blank" rel="noopener noreferrer"><Youtube size={20} /></SocialLink>
             </div>
