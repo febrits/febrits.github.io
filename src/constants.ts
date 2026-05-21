@@ -50,7 +50,7 @@ export const PROJECTS: Project[] = [
     tier: 'S',
     tech: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'Vite'],
     github: 'https://github.com/febrits/febrits.github.io',
-    live: 'https://portfolio-febri.vercel.app',
+    live: 'https://febrits.github.io',
     status: 'completed'
   },
 
