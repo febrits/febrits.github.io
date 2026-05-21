@@ -200,7 +200,7 @@ export default function App() {
             <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-brand-accent/50 p-1">
               <div className="h-full w-full overflow-hidden rounded-full bg-white/10">
                 <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" 
+                  src="/profile.jpg" 
                   alt="Profile"
                   className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0 sm:hover:grayscale-0"
                   referrerPolicy="no-referrer"
