@@ -24,7 +24,8 @@ import {
   Info,
   Send,
   Linkedin,
-  Twitter,
+  Instagram,
+  Youtube,
   ArrowUpRight,
   Terminal as TerminalIcon,
   Zap,
@@ -274,9 +275,9 @@ export default function App() {
               <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
             </button>
             <div className="flex gap-4">
-              <SocialLink href="#"><Github size={20} /></SocialLink>
-              <SocialLink href="#"><Linkedin size={20} /></SocialLink>
-              <SocialLink href="#"><Twitter size={20} /></SocialLink>
+              <SocialLink href="https://github.com/febrits" target="_blank" rel="noopener noreferrer"><Github size={20} /></SocialLink>
+              <SocialLink href="https://instagram.com/fbrilnnt" target="_blank" rel="noopener noreferrer"><Instagram size={20} /></SocialLink>
+              <SocialLink href="https://youtube.com/@febnas" target="_blank" rel="noopener noreferrer"><Youtube size={20} /></SocialLink>
             </div>
           </motion.div>
         </motion.div>
@@ -470,10 +471,12 @@ function NavButton({ children, active, onClick }: { children: React.ReactNode, a
   );
 }
 
-function SocialLink({ children, href }: { children: React.ReactNode, href: string }) {
+function SocialLink({ children, href, target, rel }: { children: React.ReactNode, href: string, target?: string, rel?: string }) {
   return (
     <a 
-      href={href} 
+      href={href}
+      target={target}
+      rel={rel}
       className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition-colors hover:border-brand-accent hover:text-brand-accent"
     >
       {children}
