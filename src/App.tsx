@@ -504,7 +504,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index % 2 * 0.2, duration: 0.8 }}
       viewport={{ once: true }}
-      className="group cursor-pointer"
+      className={cn('group cursor-pointer', showOverlay && 'z-20 relative')}
       // Desktop hover
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -515,22 +515,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         setIsOpen((prev) => !prev);
       }}
     >
-      {/* Image container — no overflow-hidden so overlay can slide up */}
-      <div className="relative aspect-[16/10] rounded-2xl bg-white/5">
-        {/* Image wrapper with overflow-hidden for the image itself */}
-        <div className="absolute inset-0 overflow-hidden rounded-2xl">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            referrerPolicy="no-referrer"
-          />
-        </div>
+      {/* Image container — overflow-hidden clips the overlay */}
+      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          referrerPolicy="no-referrer"
+        />
 
         {/* Dark tint over image — fades out when overlay shows */}
         <div
           className={cn(
-            'absolute inset-0 rounded-2xl bg-brand-bg/20 transition-opacity duration-500 pointer-events-none',
+            'absolute inset-0 bg-brand-bg/20 transition-opacity duration-500 pointer-events-none',
             showOverlay ? 'opacity-0' : 'opacity-100'
           )}
         />
@@ -548,8 +545,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
 
         {/*
-          Info Overlay — OUTSIDE the overflow-hidden wrapper.
-          Uses Framer Motion state-based animation.
+          Info Overlay — slides up from bottom WITHIN the card.
+          overflow-hidden on parent clips it so it never spills out.
           Desktop: hover via onMouseEnter/Leave
           Mobile: tap via onClick toggle
         */}
