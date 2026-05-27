@@ -1,4 +1,4 @@
-# Muhammad Febrilian Tisna — Portfolio 2026 🦉
+# Muhammad Febrilian Tisna — Portfolio 2026
 
 Personal portfolio website showcasing projects, skills, and experience.
 
