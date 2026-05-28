@@ -1,42 +1,33 @@
-# Muhammad Febrilian Tisna — Portfolio 2026
+# febrits.github.io
 
-Personal portfolio website showcasing projects, skills, and experience.
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://febrits.github.io)
+[![CI](https://github.com/febrits/febrits.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/febrits/febrits.github.io/actions)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+Personal portfolio website — built with React, TypeScript, and Vite. Deployed on Vercel.
+
+**[→ febrits.github.io](https://febrits.github.io)**
 
 ## Tech Stack
 
-- **Framework:** React 19 + TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS v4
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
+- React 18 + TypeScript
+- Vite (build tool)
+- Tailwind CSS
+- Framer Motion (animations)
+- Vercel (deployment)
 
 ## Development
 
-**Prerequisites:** Node.js 18+
-
 ```bash
+git clone https://github.com/febrits/febrits.github.io.git
+cd febrits.github.io
 npm install
-npm run dev      # Start dev server at http://localhost:3000
-npm run build    # Production build
-npm run preview  # Preview production build
+npm run dev
 ```
 
 ## Deployment
 
-Optimized for Vercel / Netlify / GitHub Pages. Build command: `npm run build`, output: `dist/`.
-
-## Project Structure
-
-```
-├── src/
-│   ├── App.tsx          # Main app with all sections
-│   ├── constants.ts     # Project data (tier-ranked)
-│   ├── index.css        # Global styles & Tailwind theme
-│   └── lib/utils.ts     # Utility functions
-├── index.html           # Entry HTML
-├── vite.config.ts       # Vite configuration
-└── package.json
-```
+Pushing to `main` auto-deploys via Vercel integration.
 
 ## License
 
