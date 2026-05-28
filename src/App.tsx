@@ -33,7 +33,8 @@ import {
   Globe,
   Database,
   Monitor,
-  Smartphone
+  Smartphone,
+  Star
 } from 'lucide-react';
 import { PROJECTS, type Project } from './constants';
 import { cn } from './lib/utils';
@@ -214,7 +215,7 @@ export default function App() {
                 [ ACCESS_GRANTED ]
               </p>
               <p className="font-mono text-xs tracking-[0.4em] uppercase text-white/80">
-                Fullstack Developer // Security Researcher // AI Agent Architect
+                Security Researcher // AI Agent Architect // Fullstack Developer
               </p>
             </div>
           </motion.div>
@@ -591,6 +592,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             ))}
           </div>
           <div className="mt-3 sm:mt-6 flex items-center gap-3">
+            {project.stars && project.stars > 0 && (
+              <span className="flex items-center gap-1 text-sm text-yellow-400">
+                <Star size={13} fill="currentColor" />
+                <span>{project.stars}</span>
+              </span>
+            )}
             {project.live && (
               <a
                 href={project.live}
